@@ -27,27 +27,34 @@ import {
   GraphQLSchema as Schema,
   GraphQLObjectType as ObjectType,
   GraphQLString as String,
+  GraphQLNonNull as NonNull,
 } from 'graphql';
 
-const schema = new Schema({
-  query: new ObjectType({
-    name: 'Query',
-    fields: {
-      hello: {
-        type: String,
-        resolve() {
-            return "Hello World"
-        }
-      }
-    },
-  })
+const messageType = new ObjectType({
+  name: 'Message',
+  fields: {
+    message: { type: String }
+  }
 });
 
-const root = {
-  hello: () => {
-    return "Hello world";
+const hello = {
+  type: messageType,
+  args: {
+    name: { type: new NonNull(String) }
+  },
+  resolve(_, {name}) {
+      return { message: `Hello World ${name}` }
   }
 };
+
+const query = new ObjectType({
+  name: 'Query',
+  fields: {
+    hello
+  }
+});
+
+const schema = new Schema({ query });
 
 const app = express();
 app.use('/graphql', graphqlHTTP({
