@@ -33,8 +33,13 @@ const schema = new Schema({
   query: new ObjectType({
     name: 'Query',
     fields: {
-      hello: { type: String}
-    }
+      hello: {
+        type: String,
+        resolve() {
+            return "Hello World"
+        }
+      }
+    },
   })
 });
 
@@ -47,7 +52,6 @@ const root = {
 const app = express();
 app.use('/graphql', graphqlHTTP({
   schema: schema,
-  rootValue: root,
   graphiql: true
 }));
 
