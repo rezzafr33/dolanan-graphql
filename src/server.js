@@ -42,9 +42,7 @@ const hello = {
   args: {
     name: { type: new NonNull(String) }
   },
-  resolve(_, {name}) {
-      return { message: `Hello World ${name}` }
-  }
+  resolve: (_, {name}) => ({ message: `Hello World ${name}` })
 };
 
 const query = new ObjectType({
