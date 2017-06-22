@@ -24,15 +24,19 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import {
-  graphql,
-  buildSchema
+  GraphQLSchema as Schema,
+  GraphQLObjectType as ObjectType,
+  GraphQLString as String,
 } from 'graphql';
 
-const schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
+const schema = new Schema({
+  query: new ObjectType({
+    name: 'Query',
+    fields: {
+      hello: { type: String}
+    }
+  })
+});
 
 const root = {
   hello: () => {
