@@ -23,36 +23,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
-import {
-  GraphQLSchema as Schema,
-  GraphQLObjectType as ObjectType,
-  GraphQLString as String,
-  GraphQLNonNull as NonNull,
-} from 'graphql';
-
-const messageType = new ObjectType({
-  name: 'Message',
-  fields: {
-    message: { type: String }
-  }
-});
-
-const hello = {
-  type: messageType,
-  args: {
-    name: { type: new NonNull(String) }
-  },
-  resolve: (_, {name}) => ({ message: `Hello World ${name}` })
-};
-
-const query = new ObjectType({
-  name: 'Query',
-  fields: {
-    hello
-  }
-});
-
-const schema = new Schema({ query });
+import schema from './schema';
 
 const app = express();
 app.use('/graphql', graphqlHTTP({
