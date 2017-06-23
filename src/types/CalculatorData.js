@@ -11,6 +11,7 @@ const CalculatorData = new ObjectType({
   fields: {
     types: { type: CalculatorTypeListType, resolve: obj => obj.type },
     covers: { type: CalculatorCoverListType, resolve: obj => obj.cover },
+    accessories: { type: CalculatorCoverListType, resolve: obj => obj.accessories },
     prices: { type: CalculatorPriceListType, resolve: obj => obj.data }
   }
 });
